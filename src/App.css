@@ -1,3 +1,14 @@
+/* App.css */
+
+/* Import the DMSans font (adjust the path accordingly) */
+
+
+/* Apply 'DMSans' font to the entire application */
+body {
+  font-family: 'DMR', sans-serif;
+}
+
+/* Your existing styles can follow */
 .App {
   text-align: center;
 }

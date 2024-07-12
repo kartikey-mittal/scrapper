@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "DMR";   /*Can be any text*/
+  src: local("AirbnbCerealLight"),
+    url("./fonts/DMR.ttf") format("truetype");
+}
