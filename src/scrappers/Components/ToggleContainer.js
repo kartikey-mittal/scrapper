@@ -1,0 +1,27 @@
+import React,{useState} from 'react'
+import ToggleSwitch from "./Toggle/ToggleSwitch";
+const ToggleContainer = () => {
+    const [isToggled, setIsToggled] = useState(false);
+  return (
+    <div>
+         {/* toggle vali div */}
+  <div className="toodle" style={{padding:'8px', backgroundColor:'#A9EC93',display:'flex', justifyContent:'space-between',
+  alignItems:"center", 
+  borderStyle:'none', 
+  border: '1px solid black', 
+  borderRadius: '15px', 
+  height: '12vh'}}>
+
+{/* if want to add in p tag ...#aviral kabadi vala😂 */}
+    <p></p>
+  <ToggleSwitch
+        isToggled={isToggled}
+        onToggle={() => setIsToggled(!isToggled)}
+      />
+  
+  </div>
+    </div>
+  )
+}
+
+export default ToggleContainer

@@ -1,9 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
+
+import OrderList from "./OrderList/OrderList";
+import ToggleContainer from "./ToggleContainer";
 
 const Left = () => {
+  
+
   return (
-<div style={{backgroundColor:'green',height:'100vh'}}>
-      LEFT
+<div style={{backgroundColor:'white',height:'100vh',padding:'8px'}}>
+ <ToggleContainer/>
+  
+<OrderList/>
+
     </div>
   )
 };
