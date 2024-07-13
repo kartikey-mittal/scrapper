@@ -54,7 +54,7 @@ border-radius: 10px;
 
 .patani {
     height: 35px ;
-    width: 150px;
+   
     border: .002rem solid black;
     align-items: center;
     display: flex;
@@ -70,6 +70,12 @@ border-radius: 10px;
     height: 35px;
     width: auto;
     border-radius: 5px;
+    margin-left: 4px;
 
 }
 
+.div-right .ok{
+   height: auto;
+    width:fit-content;
+  
+}
