@@ -13,5 +13,9 @@
     border-radius: 10%;
   }
   
- 
+  .scrollable-container {
+    max-height: 500px; /* Adjust based on your needs */
+    overflow-y: auto;
+  }
+  
   
