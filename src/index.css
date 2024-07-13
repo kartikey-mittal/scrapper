@@ -15,15 +15,15 @@ code {
 @font-face {
   font-family: "DMR";   /*Can be any text*/
   src: local("AirbnbCerealLight"),
-    url("./fonts/DMR.ttf") format("truetype");
+    url("./fonts/HKR.otf") format("truetype");
 }
 @font-face {
   font-family: "DMB";   /*Can be any text*/
   src: local("AirbnbCerealLight"),
-    url("./fonts/DMB.ttf") format("truetype");
+    url("./fonts/HKB.otf") format("truetype");
 }
 @font-face {
   font-family: "DMSB";   /*Can be any text*/
   src: local("AirbnbCerealLight"),
-    url("./fonts/DMSB.ttf") format("truetype");
+    url("./fonts/HKSB.otf") format("truetype");
 }

@@ -1,0 +1,48 @@
+/* OrderList.css */
+
+.bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: height 0.3s ease;
+  }
+  
+  .bottom-sheet-content {
+    padding: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .bottom-sheet1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: height 0.3s ease;
+  }
+  
+  .bottom-sheet-content1 {
+    padding: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .bottom-sheet.open {
+    height: 10%;
+  }
+  
+  .bottom-sheet.open .bottom-sheet-content {
+    opacity: 1;
+  }
+  
