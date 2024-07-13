@@ -25,7 +25,7 @@ const R4 = () => {
 
 <button 
 style={{
-  paddingTop: '17', // Padding moved here
+  paddingTop: 17, // Padding moved here
   paddingBottom: 17, // Padding moved here
   backgroundColor: "#385aeb",
   border: "0.1rem solid #385aeb",
