@@ -13,7 +13,6 @@ function RightVechicle() {
       flexDirection: "column",
       alignItems: "center",
       border: ".5px solid grey",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" // Add box shadow here
     }}>
       <h3 style={{ textAlign: "center", color: "#33333b", fontFamily: "DMB" }}>My Vehicle</h3>
       <FaMotorcycle style={{ fontSize: "5rem" }} />

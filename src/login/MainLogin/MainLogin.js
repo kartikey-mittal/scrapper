@@ -5,8 +5,8 @@ import MainLoginR from "./MainLoginR";
 const MainLogin = () => {
   return (
  
-        <div style={{display:'flex',flexDirection:'row',width:'100vw',height:'100vh'}}>
-      <div style={{width:'55%'}}>
+        <div style={{display:'flex',flexDirection:'row',width:'100vw',height:'100vh',justifyContent:"space-between",alignItems:"center"}}>
+      <div style={{width:'53%'}}>
      <MainLoginL/>
       </div>
       <div style={{width:'45%'}}>
