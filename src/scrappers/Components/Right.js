@@ -17,8 +17,10 @@ const Right = () => {
       <RightUp count1={30} count2={40} count3={50} />
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
         <RightGraph />
+        <div style={{display:"flex",flexDirection:"column"}}>
         <RightMaterials materials={materialsData} />
         <RightVechicle />
+        </div>
       </div>
     </div>
   );
