@@ -1,0 +1,74 @@
+.parent{
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    height: 110px;
+    width: auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.div-left{
+    background-color: #D9FFE8;
+height: 60px;
+width: 70px;
+margin-left: 1rem;
+
+border: .005rem solid black;
+border-radius: 10px;
+}
+.div-right p{
+    height: 35px ;
+    width: auto;
+    border: .005rem solid black;
+    align-items: center;
+    display: flex;
+    margin-left: 3rem;
+}
+.div-right {
+    display: flex;
+    flex-direction: row;
+   justify-content: stretch;
+   align-items: center;
+   
+    
+   height: 100px;
+   width: auto;
+   
+    box-sizing: border-box;
+   
+   
+    background-clip: padding-box;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    margin-top: 5px;
+   
+  }
+  
+  .div-right p:first-child{
+    font-size: large;
+   font-weight: 600;
+   color: #33333B;
+   border: none;
+}
+
+.patani {
+    height: 35px ;
+    width: 150px;
+    border: .002rem solid black;
+    align-items: center;
+    display: flex;
+    border-radius: 5px;
+    justify-content: center;
+  text-align: end;
+  margin-top: 0;
+}
+
+.blank{
+    font-size: small;
+    background-color: #65C047;
+    height: 35px;
+    width: auto;
+    border-radius: 5px;
+
+}

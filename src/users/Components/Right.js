@@ -2,8 +2,10 @@ import React from "react";
 import R1 from "./R1";
 import R2 from "./R2";
 import R3 from "./R3";
+import R4 from './R4/R4'
 
 const Right = () => {
+
   return (
     <div style={{ backgroundColor: '#fffefe', height: '100vh', overflow: 'hidden' }}>
       <div
@@ -33,7 +35,8 @@ const Right = () => {
         </div>
         <div style={{ flex: 1, overflowY: 'auto',backgroundColor:'transparent' }}>
           {/* <R1 /> */}
-          <R2 />
+          {/* <R2 /> */}
+          <R4 />
           {/* <R3/> */}
         </div>
       </div>
