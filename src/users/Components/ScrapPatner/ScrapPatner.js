@@ -11,7 +11,7 @@ const ScrapPatner = () => {
      <div>  <p style={{fontSize:'x-large' ,marginBottom:'4px'}}> Aviral saxena</p>
      <div style={{ textAlign: 'right', marginLeft: '3rem', paddingLeft: '2rem' }} className='patani'>Aluminium <span className="blank">₹7/KG</span> </div>
      </div>
-     <div  style={{ alignSelf:'end',marginLeft:'3rem' , paddingLeft:'2rem',textAlign: 'end', }} className='patani ok'>Aluminium <span className="blank">₹7/KG</span> </div>
+     <div  style={{ alignSelf:'end',marginLeft:'3rem' , paddingLeft:'2rem',textAlign: 'end', }} className='patani ok'>I <span className="blank">₹7/KG</span> </div>
     </div>
      
      

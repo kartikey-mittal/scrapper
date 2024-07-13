@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { db } from './../../firebase'; // Import Firestore instance
+import { doc, setDoc } from 'firebase/firestore'; // Import Firestore methods
 
-const UserLogin1 = () => {
+const UserLogin1 = ({ location }) => {
+
+  const [name, setName] = useState("");
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [formattedAddress, setFormattedAddress] = useState("");
   const [city, setCity] = useState("");
+  const [houseNo, setHouseNo] = useState("");
+  const { state } = useLocation();
+  const { phoneNumber } = state;
+
+  console.log(phoneNumber);
+  
+  
 
   useEffect(() => {
-    // Function to fetch geolocation coordinates on component mount
     const fetchCoordinates = () => {
       const options = {
         enableHighAccuracy: true,
@@ -44,7 +55,6 @@ const UserLogin1 = () => {
       }
     };
 
-    // Function to fetch address details from Google Geocoding API
     const fetchAddressDetails = async (lat, lng) => {
       const apiKey = "AIzaSyAyJpLSyJTHpJ2zkMaHB-eXb2L63MpONa4";
       const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=street_address&key=${apiKey}`;
@@ -52,12 +62,9 @@ const UserLogin1 = () => {
       try {
         const response = await axios.get(apiUrl);
         if (response.data.results.length > 0) {
-          const formattedAddress =
-            response.data.results[0].formatted_address;
+          const formattedAddress = response.data.results[0].formatted_address;
 
-          // Extract city name
-          const addressComponents =
-            response.data.results[0].address_components;
+          const addressComponents = response.data.results[0].address_components;
           const cityComponent = addressComponents.find(
             (component) =>
               component.types.includes("locality") &&
@@ -78,7 +85,34 @@ const UserLogin1 = () => {
     fetchCoordinates(); // Fetch coordinates on component mount
   }, []); // Empty dependency array ensures useEffect runs only once on mount
 
-  // Function to generate Google Maps iframe URL
+  const handleSubmit = async () => {
+    if (!phoneNumber) {
+      alert("Phone number not available. Cannot proceed.");
+      return;
+    }
+  
+    if (!houseNo || !formattedAddress || !city) {
+      alert("Please fill in all the details.");
+      return;
+    }
+  
+    const fullAddress = `${houseNo}, ${formattedAddress}`;
+    try {
+      await setDoc(doc(db, "users", phoneNumber), {
+        Address: fullAddress,
+        City: city,
+        Name: name,
+        Phone: phoneNumber,
+      });
+      alert("Address saved successfully!");
+    } catch (error) {
+      console.error("Error saving address:", error);
+      alert(`Error saving address: ${error.message}`);
+    }
+  };
+  
+  
+
   const generateMapUrl = () => {
     if (latitude && longitude) {
       return `//maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
@@ -96,7 +130,6 @@ const UserLogin1 = () => {
         overflow: "hidden",
       }}
     >
-      {/* Left Side with Google Maps iframe */}
       <div
         style={{
           width: "60%",
@@ -119,7 +152,6 @@ const UserLogin1 = () => {
         ></iframe>
       </div>
 
-      {/* Right Side with Form Inputs */}
       <div
         style={{
           position: "relative",
@@ -168,6 +200,8 @@ const UserLogin1 = () => {
                   backgroundColor: "#f4f4f4",
                   fontSize: "1.3rem",
                 }}
+                value={houseNo}
+                onChange={(e) => setHouseNo(e.target.value)}
               />
             </div>
             <div style={{ width: "50%", paddingLeft: "10px" }}>
@@ -228,17 +262,17 @@ const UserLogin1 = () => {
           <button
             style={{
               padding: "15px 20px",
-              borderRadius: "0.9rem",
-              backgroundColor: "#385aeb",
-              color: "white",
+              borderRadius: "0.8rem",
+              backgroundColor: "#14AFF1",
               border: "none",
+              color: "white",
+              fontSize: "1.5rem",
               fontFamily: "DMSB",
-              fontSize: "1.3rem",
               cursor: "pointer",
-              width: "90%",
             }}
+            onClick={handleSubmit}
           >
-            Submit
+            Register
           </button>
         </div>
       </div>
