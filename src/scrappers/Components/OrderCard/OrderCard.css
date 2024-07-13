@@ -1,0 +1,42 @@
+.order-card {
+    display: flex;
+    flex-direction: row;
+   justify-content: stretch;
+   
+    
+    height: 120px;
+    max-width: auto; 
+    width: 90%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #F4F4F4;
+    margin: 0.5rem; 
+    background-clip: padding-box;
+    border: 1px solid#33333B;
+    border-radius: 15px;
+   
+ 
+}
+
+
+
+.blank {
+    height: 40px; 
+    line-height: 40px; 
+    width: 30%;
+    background-color: #4CAF50;
+    border-radius: 15px;
+    margin-top: auto;
+    
+    margin-left: auto;
+}
+
+.order-card p:first-child{
+    font-size: large;
+   font-weight: 600;
+   color: #33333B;
+}
+.order-card p{
+    color: #74B7A0;
+}

@@ -6,12 +6,15 @@ import HomeScreen from './pages/Home';
 import Test from './pages/Test';
 import ScrapHome from './scrappers/Pages/ScrapHome';
 import UserHome from './users/Pages/UserHome';
+import MainLogin from './login/MainLogin/MainLogin';
 
 const routes = [
   { path: '/', element: <HomeScreen />,},
   { path: '/test', element: <Test />,},
   { path: '/scrap/home', element: <ScrapHome />,},
   { path: '/user/home', element: <UserHome />,},
+  { path: '/login', element: <MainLogin />,},
+
 
 ];
 
