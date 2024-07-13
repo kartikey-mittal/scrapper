@@ -21,12 +21,22 @@ const MainLoginL = () => {
         <h1 style={{ marginBottom: "0.5rem",fontFamily:"DMSB" }}>& collect scrap online!</h1>
         <p style={{marginTop:"5rem",fontSize:"1rem",color:"#7f7f7f"}}>Enter Phone Number</p>
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-          <input
-            type="text"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-            style={{ height: 40, width: 200, marginRight: 10, padding: 5, border: '1px solid gray', borderRadius: 5 ,backgroundColor:"#f4f4f4"}}
-          />
+        <input
+                type="number"
+             
+                value={phoneNumber}
+                onChange={handlePhoneNumberChange}
+                style={{
+                  width: '50%',
+                  borderRadius: '0.5rem',
+                  border: '1px solid #a2a2a3',
+                  padding: '10px',
+                  fontFamily: 'DMSB',
+                  backgroundColor: "#f4f4f4",
+                  fontSize: "1.3rem",
+                  marginRight: '10px'
+                }}
+              />
           <button
             style={{
               backgroundColor: '#318216',

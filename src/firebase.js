@@ -1,6 +1,7 @@
-// Import the functions you need from the SDKs you need
+// firebase.js
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -12,11 +13,8 @@ const firebaseConfig = {
   appId: "1:601535062847:web:10b1c33d664308256ea98a"
 };
 
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app); // Get Storage instance
 
-// const messaging = getMessaging(app);
-
-
-export { db,collection };
+export { db, collection, storage, ref, uploadBytes, getDownloadURL }; 

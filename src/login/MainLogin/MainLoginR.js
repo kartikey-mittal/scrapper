@@ -2,9 +2,13 @@ import React, { useState } from "react";
 
 const MainLoginR = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [name, setName] = useState("");
 
   const handlePhoneNumberChange = (event) => {
     setPhoneNumber(event.target.value);
+  };
+  const handleNameChange = (event) => {
+    setName(event.target.value);
   };
 
   const handleGoScrapClick = () => {
@@ -20,23 +24,42 @@ const MainLoginR = () => {
         <h1 style={{ marginBottom: "-0.8rem" ,color:"#385aeb",fontFamily:"DMB",fontSize:"2.5rem"}}>ScrapMate is here...</h1>
         <h1 style={{ marginBottom: "0.5rem",fontFamily:"DMSB" }}>Recycle | Reward | Repeat</h1>
         <p style={{marginTop:"3rem",fontSize:"1rem",color:"#7f7f7f"}}>Enter Phone Number</p>
-        
-          <input
-            type="text"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-            style={{ height: 40, width: "40%", marginRight: 10, padding: 5, border: '.08rem solid gray', borderRadius: 10 ,backgroundColor:"#f4f4f4"}}
-          />
+        <input
+                type="text"
+            
+                value={name}
+                onChange={handleNameChange}
+                style={{
+                  width: '70%',
+                  borderRadius: '0.5rem',
+                  border: '1px solid #a2a2a3',
+                  padding: '10px',
+                  fontFamily: 'DMSB',
+                  backgroundColor: "#f4f4f4",
+                  fontSize: "1.3rem",
+                  marginRight: '10px'
+                }}
+              />
          
         
         <p style={{marginTop:"2rem",fontSize:"1rem",color:"#7f7f7f"}}>Full Name</p>
         
-          <input
-            type="text"
-            value={phoneNumber}
-            onChange={handlePhoneNumberChange}
-            style={{ height: 40, width: "40%", marginRight: 10, padding: 5, border: '.08rem solid gray', borderRadius: 10 ,backgroundColor:"#f4f4f4"}}
-          />
+        <input
+                type="number"
+             
+                value={phoneNumber}
+                onChange={handlePhoneNumberChange}
+                style={{
+                  width: '70%',
+                  borderRadius: '0.5rem',
+                  border: '1px solid #a2a2a3',
+                  padding: '10px',
+                  fontFamily: 'DMSB',
+                  backgroundColor: "#f4f4f4",
+                  fontSize: "1.3rem",
+                  marginRight: '10px'
+                }}
+              />
           <button
             style={{
               backgroundColor: '#385aeb',
