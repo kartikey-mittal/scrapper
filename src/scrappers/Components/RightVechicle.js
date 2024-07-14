@@ -25,6 +25,7 @@ function RightVehicle() {
     paddingLeft: "1.3rem",
     boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
     background: "linear-gradient(to right, #d7e4f7, #f7d7e4)", // Updated gradient color
+    paddingBottom:'2rem'
   };
 
   const headerStyle = {
@@ -62,7 +63,7 @@ function RightVehicle() {
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.3 }}
       >
-        <img src="https://s10.gifyu.com/images/St6lm.png" alt="Vehicle" style={{ width: "100%", height: "100%", borderRadius: "20px" }} />
+        <img src="https://s10.gifyu.com/images/St6IC.png" alt="Vehicle" style={{ width: "100%", height: "100%", borderRadius: "20px" }} />
       </motion.div>
     </motion.div>
   );

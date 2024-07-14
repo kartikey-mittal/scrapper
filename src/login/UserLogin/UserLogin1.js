@@ -104,6 +104,7 @@ const UserLogin1 = ({ location }) => {
         City: city,
         Name: name,
         Phone: phoneNumber,
+        
       });
       alert("Address saved successfully!");
       // Store name and phoneNumber in local storage

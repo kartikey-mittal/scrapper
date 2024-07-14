@@ -20,6 +20,15 @@ const PaymentCard = ({ onPay, order }) => {
   // Function to handle payment and update Firestore
   const handlePayment = async () => {
     try {
+      // Log the OrderID and Scrapper values to debug
+      console.log('OrderID:', OrderID);
+      console.log('Scrapper:', Scrapper);
+
+      // Ensure OrderID and Scrapper are not undefined or null
+      if (!OrderID || !Scrapper) {
+        throw new Error('OrderID or Scrapper is undefined or null');
+      }
+
       // Update order status
       const orderDocRef = doc(db, 'orders', OrderID); // Reference to the order document
       await updateDoc(orderDocRef, {

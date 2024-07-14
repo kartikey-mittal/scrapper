@@ -56,7 +56,8 @@ const R3 = ({ setComponentID }) => {
         Name: name,
         OrderID: orderID,
         Phone: phone,
-        Status: 1
+        Status: 1,
+        Scrapper:'8076940848'
       });
 
       console.log("Order submitted successfully");

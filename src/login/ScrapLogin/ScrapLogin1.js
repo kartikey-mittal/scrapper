@@ -58,7 +58,7 @@ const ScrapLogin1 = () => {
   const images = [
     "https://s12.gifyu.com/images/St67y.png",
     "https://s12.gifyu.com/images/St6IT.png",
-    "https://s10.gifyu.com/images/St6IC.png",
+    "p",
     "https://s10.gifyu.com/images/St6lm.png",
   ];
 
