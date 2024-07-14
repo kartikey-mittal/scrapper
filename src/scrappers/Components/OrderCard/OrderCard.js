@@ -18,10 +18,15 @@ function OrderCard({ onViewOrder, order }) {
   } else if (Status === 3) {
     statusLabel = "CANCELLED";
     statusStyle = { backgroundColor: 'red', color: 'white', padding: 5, borderRadius: 10,alignItems:'center',fontSize:'0.6rem', };
-  } else {
+  } 
+  else if (Status === 4) {
+    statusLabel = "DELIVERED";
+    statusStyle = { backgroundColor: 'green', color: 'white', padding: 5, borderRadius: 10,alignItems:'center',fontSize:'0.6rem', };
+  }else {
     statusLabel = "NEW";
     statusStyle = { backgroundColor: '#f7df6b', color: 'black', padding: 5, borderRadius: 10,alignItems:'center',fontSize:'0.6rem', };
   }
+  
 
   return (
     <div style={{ width: "90%" }}>

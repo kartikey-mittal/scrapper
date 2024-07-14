@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import ToggleSwitch from "./Toggle/ToggleSwitch";
 const ToggleContainer = () => {
-    const [isToggled, setIsToggled] = useState(false);
+    const [isToggled, setIsToggled] = useState(true);
   return (
     <div style={{marginTop:10}}>
          {/* toggle vali div */}

@@ -5,8 +5,8 @@ function RightVehicle() {
   const [hovered, setHovered] = useState(false);
 
   const iconStyle = {
-    width: "10rem",  // Adjust width and height according to your design
-    height: "8rem",
+    width: "8rem",  // Adjust width and height according to your design
+    height: "6rem",
     marginLeft: hovered ? "12rem" : "0rem",
     transition: "margin-left 0.4s ease-in-out",
    
@@ -25,7 +25,7 @@ function RightVehicle() {
     paddingLeft: "1.3rem",
     boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
     background: "linear-gradient(to right, #d7e4f7, #f7d7e4)", // Updated gradient color
-    paddingBottom:'2rem'
+    paddingBottom:'0rem'
   };
 
   const headerStyle = {
@@ -59,11 +59,11 @@ function RightVehicle() {
       </motion.h3>
       <motion.div
         style={iconStyle}
-        whileHover={{ scale: 1.2 }}
-        whileTap={{ scale: 0.9 }}
+        whileHover={{ scale: 0.5 }}
+        whileTap={{ scale: 0.2 }}
         transition={{ duration: 0.3 }}
       >
-        <img src="https://s10.gifyu.com/images/St6IC.png" alt="Vehicle" style={{ width: "100%", height: "100%", borderRadius: "20px" }} />
+        <img src="https://s10.gifyu.com/images/St6IC.png" alt="Vehicle" style={{ width: "100%", height: "100%", borderRadius: "10px",border:'0.09rem solid #cccccc' }} />
       </motion.div>
     </motion.div>
   );
