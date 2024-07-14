@@ -2,11 +2,24 @@ import React from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoIosNavigate } from "react-icons/io";
 import { IoNavigateCircle } from "react-icons/io5";
-
 import { IoIosCall } from "react-icons/io";
-const BS1 = ({ isOpen1, toggleSheet }) => {
-  const items = ['Aluminium', 'Steel', 'Copper', 'Bronze'];
+import { doc, updateDoc } from "firebase/firestore"; // Import necessary Firestore functions
+import { db } from './../../firebase'; // Assuming db is your Firestore instance ex
+const BS1 = ({ isOpen1, toggleSheet, order }) => {
+  const { OrderID, Scrapper, TotalBill, Items, Status, Name, Address, Phone } = order;
 
+  // Function to filter the items and remove the parts after the first slash
+  const filteredItems = Items.map(item => item.split('/')[0]);
+  const handleAccept = async () => {
+    try {
+      const orderDocRef = doc(db,'orders', OrderID);
+      await updateDoc(orderDocRef, { Status: 2 });
+      console.log('Order accepted and status updated to 2');
+      toggleSheet(); // Close the sheet after updating
+    } catch (error) {
+      console.error('Error updating order status:', error);
+    }
+  };
   return (
     <div
       className={`bottom-sheet ${isOpen1 ? "open" : ""}`}
@@ -30,41 +43,38 @@ const BS1 = ({ isOpen1, toggleSheet }) => {
           padding: "0.8rem",
           opacity: isOpen1 ? 1 : 0,
           transition: "opacity 0.3s ease",
-
-          overflowY: 'auto', // Add vertical scroll for content 
-          flex: 1,           
+          overflowY: 'auto', // Add vertical scroll for content
+          flex: 1,
         }}
       >
         <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingTop: 15,
-        paddingBottom: 10,
-      }}
-    >
-      <span
-        style={{ fontFamily: "DMSB", fontSize: "1.5rem", color: "#33333B" }}
-      >
-       Mr. Aviral Saxena
-      </span>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          fontFamily: "DMSB",
-          fontSize: "1.2rem",
-          color: "#47474f",
-          // textDecorationLine: "underline",
-          marginRight: 5,
-        }}
-      >
-          +91 7678416005  
-        <IoIosCall style={{ marginRight: 5,color:'#fff',fontSize:'1.5rem' ,backgroundColor:"#2c2c2c",padding:5,borderRadius:50,marginLeft:10}} />
-      
-      </div>
-    </div>
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingTop: 15,
+            paddingBottom: 10,
+          }}
+        >
+          <span
+            style={{ fontFamily: "DMSB", fontSize: "1.5rem", color: "#33333B" }}
+          >
+            {Name}
+          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontFamily: "DMSB",
+              fontSize: "1.2rem",
+              color: "#47474f",
+              marginRight: 5,
+            }}
+          >
+            {Phone}
+            <IoIosCall style={{ marginRight: 5, color: '#fff', fontSize: '1.5rem', backgroundColor: "#2c2c2c", padding: 5, borderRadius: 50, marginLeft: 10 }} />
+          </div>
+        </div>
 
         <div
           style={{
@@ -104,18 +114,18 @@ const BS1 = ({ isOpen1, toggleSheet }) => {
             </span>
           </div>
           <div
-      style={{
-        alignSelf: "flex-start",
-        height: "5rem",
-        width: "10rem",
-        backgroundColor: "#e7ebfd",
-        borderRadius: 10,
-        border: "0.1rem solid #cccccc",
-        backgroundImage: "url('https://www.grihshobha.in/wp-content/uploads/2021/12/raddi.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    ></div>
+            style={{
+              alignSelf: "flex-start",
+              height: "5rem",
+              width: "10rem",
+              backgroundColor: "#e7ebfd",
+              borderRadius: 10,
+              border: "0.1rem solid #cccccc",
+              backgroundImage: "url('https://www.grihshobha.in/wp-content/uploads/2021/12/raddi.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
         </div>
 
         <div
@@ -140,13 +150,13 @@ const BS1 = ({ isOpen1, toggleSheet }) => {
               <p
                 style={{
                   fontFamily: "DMR",
-                  fontSize: "1rem",
+                  fontSize: "1.2rem",
                   lineHeight: "1.5",
                   marginBottom: 0,
                   color: "#9f9f9f",
                 }}
               >
-                House No-25, Block B , Singh Colony ,Near Uddham Singh Nagar, Rudrapur City, 201305, Uttrakhand
+                {Address}
               </p>
             </div>
             <div
@@ -176,7 +186,7 @@ const BS1 = ({ isOpen1, toggleSheet }) => {
           </span>
 
           <div style={{ display: "flex", flexDirection: "row", marginTop: 10 }}>
-            {items.map((item, index) => (
+            {filteredItems.map((item, index) => (
               <span
                 key={index} // Use a unique key for each item
                 style={{
@@ -197,15 +207,14 @@ const BS1 = ({ isOpen1, toggleSheet }) => {
             ))}
           </div>
         </div>
-        <div style={{height:120,display:'flex',flex:1}}></div>
+        <div style={{ height: 120, display: 'flex', flex: 1 }}></div>
 
-        <div style={{flex:1,height:'100%'}}></div>
+        <div style={{ flex: 1, height: '100%' }}></div>
         <div style={{ display: 'flex', flexDirection: "row", padding: 2, marginTop: 20, gap: 5, marginTop: 'auto' }}>
           <button style={{ paddingTop: 17, paddingBottom: 17, backgroundColor: "white", border: "0.1rem solid #e7191f", width: "40%", borderRadius: 10, fontSize: '1.2rem', color: '#e7191f', fontFamily: "DMB" }} onClick={toggleSheet}>REJECT</button>
-          <button style={{ paddingTop: 17, paddingBottom: 17, backgroundColor: "#318216", border: "0.1rem solid #318216", width: "60%", borderRadius: 10, fontSize: '1.2rem', color: '#ffffff', fontFamily: "DMB" }} onClick={toggleSheet}>ACCEPT</button>
+          <button style={{ paddingTop: 17, paddingBottom: 17, backgroundColor: "#318216", border: "0.1rem solid #318216", width: "60%", borderRadius: 10, fontSize: '1.2rem', color: '#ffffff', fontFamily: "DMB" }} onClick={handleAccept}>ACCEPT</button>
         </div>
 
-   
       </div>
     </div>
   );

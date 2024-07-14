@@ -1,57 +1,82 @@
 import React, { useState } from 'react';
-import { IoIosNavigate } from "react-icons/io";
-import { FaPhone } from 'react-icons/fa';
 import { IoIosCall } from "react-icons/io";
 import { IoNavigateCircle } from "react-icons/io5";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from './../../firebase'; // Make sure to import your Firestore config
 
-const BS2 = ({ isOpen2, toggleSheet }) => {
-  // State to store the list of items
-  const items = ["Aluminium", "Steel"];
+const BS2 = ({ isOpen2, toggleSheet, order }) => {
+  const { OrderID, Scrapper, TotalBill, Items, Status, Name, Address, Phone } = order;
 
-  // State to track selected item indices
-  const [selectedItems, setSelectedItems] = useState([]); 
+  // Process items to separate the name and rate
+  const processedItems = Items.map(item => {
+    const [name, rate] = item.split('/');
+    return { name, rate };
+  });
 
-  // State to track modal open/close
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-
-  // State to store weight details
-  const [weightDetails, setWeightDetails] = useState(''); 
-
-  // State to track selected unit (Kg, gm, pcs)
-  const [selectedUnit, setSelectedUnit] = useState('Kg'); 
-
-  // State to track the currently selected item for the modal (index)
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [weightDetails, setWeightDetails] = useState('');
+  const [selectedUnit, setSelectedUnit] = useState('Kg');
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
-  // Function to handle item clicks
   const handleItemClick = (index) => {
-    setSelectedItemIndex(index); 
-    openModal(); 
+    setSelectedItemIndex(index);
+    openModal();
   };
 
-  // Function to open the modal
   const openModal = () => {
     setIsModalOpen(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedItemIndex(null); 
+    setSelectedItemIndex(null);
   };
 
-  // Function to handle unit changes (Kg, gm, pcs)
   const handleUnitChange = (unit) => {
     setSelectedUnit(unit);
   };
 
-  // Function to handle form submission in the modal
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (selectedItemIndex !== null && !selectedItems.includes(selectedItemIndex)) {
       setSelectedItems([...selectedItems, selectedItemIndex]);
     }
-    closeModal(); 
+  
+    const updatedItems = processedItems.map((item, index) => {
+      if (index === selectedItemIndex) {
+        const updatedItem = { ...item, merged: `${item.name}/${item.rate}/${weightDetails}` };
+        return updatedItem;
+      } else if (item.merged) {
+        // Preserve previously merged items
+        return item;
+      } else {
+        // Handle items that were not previously merged
+        return { ...item, merged: `${item.name}/${item.rate}` };
+      }
+    });
+  
+    // Output the updated items to console
+    console.log('Updated Items:', updatedItems);
+  
+    // Combine the updated items into a single array
+    const combinedItems = updatedItems.map(item => item.merged);
+  
+    // Update Firestore document
+    try {
+      const orderDocRef = doc(db, "orders", OrderID);
+      await updateDoc(orderDocRef, {
+        Items: combinedItems,
+        Status:2
+      });
+      console.log('Firestore document successfully updated!');
+    } catch (error) {
+      console.error('Error updating Firestore document: ', error);
+    }
+  
+    closeModal();
   };
+  
+  
 
   return (
     <div
@@ -61,59 +86,55 @@ const BS2 = ({ isOpen2, toggleSheet }) => {
         bottom: 0,
         left: 0,
         width: "100%",
-        height: isOpen2 ? "77%" : "0", 
+        height: isOpen2 ? "77%" : "0",
         backgroundColor: "white",
         borderTopLeftRadius: "20px",
         borderTopRightRadius: "20px",
         boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.1)",
         overflow: "hidden",
-        transition: "height 0.3s ease", 
+        transition: "height 0.3s ease",
       }}
     >
-      {/* Content container for the bottom sheet */}
       <div
         className="bottom-sheet-content1"
         style={{
           padding: "0.8rem",
-          opacity: isOpen2 ? 1 : 0, 
+          opacity: isOpen2 ? 1 : 0,
           transition: "opacity 0.3s ease",
-          overflowY: 'auto', // Make the content scrollable
-          display: 'flex',  // Apply flexbox
-          flexDirection: 'column', // Align content vertically
-          flex: 1 // Allow content to grow and shrink 
+          overflowY: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1
         }}
       >
-        {/* User details section */}
         <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingTop: 15,
-        paddingBottom: 10,
-      }}
-    >
-      <span
-        style={{ fontFamily: "DMSB", fontSize: "1.5rem", color: "#33333B" }}
-      >
-       Mr. Aviral Saxena
-      </span>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          fontFamily: "DMSB",
-          fontSize: "1.2rem",
-          color: "#47474f",
-          // textDecorationLine: "underline",
-          marginRight: 5,
-        }}
-      >
-          +91 7678416005  
-        <IoIosCall style={{ marginRight: 5,color:'#fff',fontSize:'1.5rem' ,backgroundColor:"#2c2c2c",padding:5,borderRadius:50,marginLeft:10}} />
-      
-      </div>
-    </div>
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingTop: 15,
+            paddingBottom: 10,
+          }}
+        >
+          <span
+            style={{ fontFamily: "DMSB", fontSize: "1.5rem", color: "#33333B" }}
+          >
+           {Name}
+          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontFamily: "DMSB",
+              fontSize: "1.2rem",
+              color: "#47474f",
+              marginRight: 5,
+            }}
+          >
+            +91 {Phone}
+            <IoIosCall style={{ marginRight: 5, color: '#fff', fontSize: '1.5rem', backgroundColor: "#2c2c2c", padding: 5, borderRadius: 50, marginLeft: 10 }} />
+          </div>
+        </div>
 
         <div
           style={{
@@ -153,18 +174,18 @@ const BS2 = ({ isOpen2, toggleSheet }) => {
             </span>
           </div>
           <div
-      style={{
-        alignSelf: "flex-start",
-        height: "5rem",
-        width: "10rem",
-        backgroundColor: "#e7ebfd",
-        borderRadius: 10,
-        border: "0.1rem solid #cccccc",
-        backgroundImage: "url('https://www.grihshobha.in/wp-content/uploads/2021/12/raddi.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    ></div>
+            style={{
+              alignSelf: "flex-start",
+              height: "5rem",
+              width: "10rem",
+              backgroundColor: "#e7ebfd",
+              borderRadius: 10,
+              border: "0.1rem solid #cccccc",
+              backgroundImage: "url('https://www.grihshobha.in/wp-content/uploads/2021/12/raddi.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          ></div>
         </div>
 
         <div
@@ -195,7 +216,7 @@ const BS2 = ({ isOpen2, toggleSheet }) => {
                   color: "#9f9f9f",
                 }}
               >
-              House No-25, Block B , Singh Colony ,Near Uddham Singh Nagar, Rudrapur City, 201305, Uttrakhand
+               {Address}
               </p>
             </div>
             <div
@@ -224,13 +245,13 @@ const BS2 = ({ isOpen2, toggleSheet }) => {
             Material List
           </span>
 
-          <div style={{ display: "flex", flexDirection: "column", marginTop: 10,marginBottom:40 }}>
-            {items.map((item, index) => (
+          <div style={{ display: "flex", flexDirection: "column", marginTop: 10, marginBottom: 40 }}>
+            {processedItems.map((item, index) => (
               <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
                 <button
                   onClick={() => handleItemClick(index)}
                   style={{
-                    backgroundColor: selectedItems.includes(index) ? "#318216" : "#fafafa", 
+                    backgroundColor: selectedItems.includes(index) ? "#318216" : "#fafafa",
                     color: selectedItems.includes(index) ? "#ffffff" : "#7F7F7F",
                     border: "1px solid #CBC7C7",
                     padding: "5px 8px",
@@ -244,225 +265,182 @@ const BS2 = ({ isOpen2, toggleSheet }) => {
                     fontSize: '1.1rem'
                   }}
                 >
-                  {item} 
+                  {item.name}
                 </button>
-                {selectedItems.includes(index) ? ( 
-              <div
-                style={{
-                  backgroundColor: "#c1ff72",
-                  color: "#000000",
-                  padding: "5px 20px",
-                  borderRadius: 15,
-                  marginLeft: 10,
-                  fontSize: '0.9rem',
-                  fontFamily: "DMR"
-                }}
-              >
-                PICKED
-              </div>
-            ) : ( // If not picked, show "Select Material" with same styling
-              <div
-                style={{
-                  backgroundColor: "#d4d4d4",
-                  color: "#000000",
-                  padding: "5px 20px",
-                  borderRadius: 15,
-                  marginLeft: 10,
-                  fontSize: '0.9rem',
-                  fontFamily: "DMR",
-                  opacity: 0.5 // You can adjust opacity if you want it lighter
-                }}
-              >
-                Select Material
-              </div>
-            )}
+                {selectedItems.includes(index) ? (
+                  <div
+                    style={{
+                      backgroundColor: "#c1ff72",
+                      color: "#000000",
+                      padding: "5px 20px",
+                      borderRadius: 15,
+                      marginLeft: 10,
+                      fontSize: '0.9rem',
+                      fontFamily: "DMR"
+                    }}
+                  >
+                    PICKED
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      backgroundColor: "#d4d4d4",
+                      color: "#000000",
+                      padding: "5px 20px",
+                      borderRadius: 15,
+                      marginLeft: 10,
+                      fontSize: '0.9rem',
+                      fontFamily: "DMR",
+                      opacity: 0.5
+                    }}
+                  >
+                    NOT PICKED
+                  </div>
+                )}
               </div>
             ))}
           </div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginTop: "auto", padding: 0,gap:20 }}>
+            <button
+              style={{
+                backgroundColor: "#D9D9D9",
+                color: "#3B3B3B",
+                padding: "5px 8px",
+                borderRadius: 5,
+                border: "1px solid #CBC7C7",
+                fontFamily: "DMR",
+                width: "50%",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onClick={toggleSheet}
+            >
+              CLOSE
+            </button>
+            <button
+              style={{
+                backgroundColor: "#318216",
+                color: "#ffffff",
+                padding: "10px px",
+                borderRadius: 5,
+                border: "1px solid #CBC7C7",
+                fontFamily: "DMR",
+                width: "50%",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',height:50,
+              }}
+              onClick={handleSubmit} // Make sure the submit button triggers the handleSubmit function
+            >
+              SUBMIT
+            </button>
+          </div>
         </div>
+      </div>
 
-        {/* PROCEED Button Container - Sticky Positioning */}
+      {isModalOpen && (
         <div
-  style={{
-    position: 'sticky',
-    bottom: 0,        
-    width: '100%',     
-    backgroundColor: 'white', 
-    zIndex: 1,       
-  }}
->
-  <div 
-    style={{
-      display: "flex",
-      flexDirection: "row",
-      padding: 2,
-      marginTop: 20,
-      gap: 5, 
-    }}
-  >
-    <button 
-      style={{
-        paddingTop: 17, // Padding moved here
-        paddingBottom: 17, // Padding moved here
-        backgroundColor: "#385aeb",
-        border: "0.1rem solid #385aeb",
-        width: "100%",
-        borderRadius: 10,
-        fontSize: "1.2rem",
-        color: "#ffffff",
-        fontFamily: "DMB", 
-      }}
-      onClick={toggleSheet} 
-    >
-      PROCEED
-    </button>
-  </div>
-</div> 
-
-        {/* Modal for weight details (conditionally rendered) */}
-        {isModalOpen && (
-          <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+          }}
+        >
+          <div
             style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-              zIndex: 1000, 
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              backgroundColor: 'white',
+              padding: 20,
+              borderRadius: 10,
+              maxWidth: '80%',
+              boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+              textAlign: 'center',
             }}
           >
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                padding: '20px',
-                borderRadius: '10px',
-                width: '80%',
-                maxWidth: '400px',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span style={{ fontSize: '1.5rem', fontFamily: 'DMB', color: '#33333B', marginBottom: '30px' }}>
-                Enter Weight Details
-              </span>
-
-              {selectedItemIndex !== null && ( 
-                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
-                 <div style={{ marginTop: '10px', textAlign: 'left', flexGrow: 1 }}>
-                   <div
-                     style={{
-                       backgroundColor: "#fafafa",
-                       color: "#7F7F7F",
-                       border: "1px solid #CBC7C7",
-                       padding: "4px 10px",
-                       borderRadius: 5,
-                       fontFamily: "DMR",
-                       width: "fit-content",
-                       display: 'flex',
-                       alignItems: 'center',
-                       justifyContent: 'center',
-                       position: 'relative',
-                       fontSize: '1.1rem',
-                       marginTop: '0px',
-                       marginBottom: '2rem',
-                     }}
-                   >
-                     {items[selectedItemIndex]}
-                   </div>
-                 </div>
-                 <div
-                   style={{
-                     width: '6rem',
-                     height: '3rem',
-                     backgroundColor: '#e7ebfd',
-                     borderRadius: 10,
-                     marginLeft: '2rem',
-                     backgroundImage: "url('https://etimg.etb2bimg.com/photo/92956384.cms')",
-                     backgroundSize: 'cover',
-                     backgroundPosition: 'center',
-                     flexShrink: 0
-                   }}
-                 ></div>
-               </div>
-              )}
-              
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <input 
-                  type="text"
-                  style={{
-                    width: '50%',
-                    padding: '10px',
-                    border: '1px solid #ccc',
-                    borderRadius: '10px',
-                    fontSize: '1rem',
-                    fontFamily: 'DMR',
-                  }}
-                  placeholder="Enter Weight"
-                  value={weightDetails} 
-                  onChange={(e) => setWeightDetails(e.target.value)} 
-                />
-                <div style={{ width: '50%', display: 'flex', alignItems: 'center' }}>
-                  <input
-                    type="radio"
-                    id="kg"
-                    name="unit"
-                    value="Kg"
-                    checked={selectedUnit === 'Kg'} 
-                    onChange={() => handleUnitChange('Kg')} 
-                  />
-                  <label htmlFor="kg" style={{ marginLeft: '5px', fontFamily: 'DMR' }}>Kg</label>
-
-                  <input
-                    type="radio"
-                    id="gm"
-                    name="unit"
-                    value="gm"
-                    checked={selectedUnit === 'gm'} 
-                    onChange={() => handleUnitChange('gm')} 
-                    style={{ marginLeft: '10px' }}
-                  />
-                  <label htmlFor="gm" style={{ marginLeft: '5px', fontFamily: 'DMR' }}>gm</label>
-
-                  <input
-                    type="radio"
-                    id="pcs"
-                    name="unit"
-                    value="pcs"
-                    checked={selectedUnit === 'pcs'} 
-                    onChange={() => handleUnitChange('pcs')} 
-                    style={{ marginLeft: '10px' }}
-                  />
-                  <label htmlFor="pcs" style={{ marginLeft: '5px', fontFamily: 'DMR' }}>pcs</label>
-                </div>
-              </div>
-
-              <button
+            <h2>Select Weight Details</h2>
+            <div style={{ marginBottom: 10 }}>
+              <input
+                type="text"
+                value={weightDetails}
+                onChange={(e) => setWeightDetails(e.target.value)}
+                placeholder="Enter weight details"
                 style={{
-                  backgroundColor: '#000',
-                  color: '#ffffff',
-                  border: 'none',
-                  padding: '15px',
-                  borderRadius: '10px',
-                  fontSize: '1rem',
-                  fontFamily: 'DMB',
-                  cursor: 'pointer', marginTop:'1.2REM'
+                  padding: '10px',
+                  width: '80%',
+                  marginBottom: '10px',
+                  borderRadius: '5px',
+                  border: '1px solid #ccc',
+                  fontSize: '1rem'
                 }}
-                onClick={handleSubmit} 
-              >
-                Submit
-              </button>
+              />
             </div>
+            <div style={{ marginBottom: 20 }}>
+              <label style={{ marginRight: 10 }}>
+                <input
+                  type="radio"
+                  value="Kg"
+                  checked={selectedUnit === 'Kg'}
+                  onChange={() => handleUnitChange('Kg')}
+                /> Kg
+              </label>
+              <label style={{ marginRight: 10 }}>
+                <input
+                  type="radio"
+                  value="Ton"
+                  checked={selectedUnit === 'Ton'}
+                  onChange={() => handleUnitChange('Ton')}
+                /> Ton
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="Pc"
+                  checked={selectedUnit === 'Pc'}
+                  onChange={() => handleUnitChange('Pc')}
+                /> Pc
+              </label>
+            </div>
+            <button
+              onClick={handleSubmit}
+              style={{
+                backgroundColor: "#318216",
+                color: "#ffffff",
+                padding: "10px 20px",
+                borderRadius: 5,
+                border: "none",
+                fontFamily: "DMR",
+                fontSize: '1rem'
+              }}
+            >
+              SAVE
+            </button>
+            <button
+              onClick={closeModal}
+              style={{
+                marginLeft: 10,
+                backgroundColor: "#D9D9D9",
+                color: "#3B3B3B",
+                padding: "10px 20px",
+                borderRadius: 5,
+                border: "none",
+                fontFamily: "DMR",
+                fontSize: '1rem'
+              }}
+            >
+              CANCEL
+            </button>
           </div>
-        )}
-
-      </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default BS2; 
+export default BS2;

@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import R1 from "./R1";
 import R2 from "./R2";
 import R3 from "./R3";
-import R4 from './R4/R4'
+import R4 from './R4/R4';
 
 const Right = () => {
+  const [componentID, setComponentID] = useState(1);
+
+  const renderComponent = () => {
+    switch (componentID) {
+      case 1:
+        return <R1 setComponentID={setComponentID} />;
+      case 2:
+        return <R2 setComponentID={setComponentID} />;
+      case 3:
+        return <R3 setComponentID={setComponentID} />;
+      case 4:
+        return <R4 setComponentID={setComponentID} />;
+      default:
+        return <R1 setComponentID={setComponentID} />;
+    }
+  };
 
   return (
     <div style={{ backgroundColor: '#fffefe', height: '100vh', overflow: 'hidden' }}>
@@ -33,11 +49,8 @@ const Right = () => {
         >
           Sell Your Scrap
         </div>
-        <div style={{ flex: 1, overflowY: 'auto',backgroundColor:'transparent' }}>
-          {/* <R1 /> */}
-          {/* <R2 /> */}
-          <R4 />
-          {/* <R3/> */}
+        <div style={{ flex: 1, overflowY: 'auto', backgroundColor: 'transparent' }}>
+          {renderComponent()}
         </div>
       </div>
     </div>

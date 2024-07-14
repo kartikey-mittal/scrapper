@@ -11,7 +11,7 @@ import UserLogin1 from './login/UserLogin/UserLogin1';
 import ScrapLogin1 from './login/ScrapLogin/ScrapLogin1';
 
 const routes = [
-  { path: '/', element: <HomeScreen />,},
+  { path: '/', element: <MainLogin />,},
   { path: '/test', element: <Test />,},
   { path: '/scrap/home', element: <ScrapHome />,},
   { path: '/user/home', element: <UserHome />,},

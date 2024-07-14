@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { storage, ref, uploadBytes, getDownloadURL } from "../../firebase";
 
-const R2 = () => {
+const R2 = ({setComponentID}) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [isUploading, setIsUploading] = useState(false); // State to track upload status
 
@@ -109,6 +109,7 @@ const R2 = () => {
             pointerEvents: imageUrl ? "auto" : "none", // Disable pointer events if no image is uploaded
           }}
           disabled={!imageUrl} // Disable the button if no image is uploaded
+          onClick={() => setComponentID(3)} // Change to component 2 on click
         >
           NEXT
         </button>

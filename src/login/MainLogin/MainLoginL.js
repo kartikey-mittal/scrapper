@@ -32,6 +32,10 @@ const MainLoginL = () => {
     }
   };
 
+  const handleGo = ()=>{
+    navigate('/scrap/home')
+  }
+
   const closeModal = () => {
     setIsModalVisible(false);
   };
@@ -42,9 +46,9 @@ const MainLoginL = () => {
         <h1 style={{ marginTop: "3rem", marginBottom: "-.9rem", fontFamily: "DMSB" }}>Register yourself on</h1>
         <h1 style={{ marginBottom: "-.9rem", color: "#318216", fontFamily: "DMB", fontSize: "2.5rem" }}>ScrapMate Partner</h1>
         <h1 style={{ marginBottom: "0.5rem", fontFamily: "DMSB" }}>& collect scrap online!</h1>
-        <p style={{ marginTop: "5rem", fontSize: "1rem", color: "#7f7f7f" }}>Enter Phone Number</p>
+        <p style={{ marginTop: "5rem", fontSize: "1rem", color: "#7f7f7f" }}>Proceed Ahead</p>
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-          <input
+          {/* <input
             type="number"
             placeholder="+91"
             value={phoneNumber}
@@ -59,7 +63,7 @@ const MainLoginL = () => {
               fontSize: "1.3rem",
               marginRight: '10px'
             }}
-          />
+          /> */}
           <button
             style={{
               backgroundColor: '#318216',
@@ -67,17 +71,17 @@ const MainLoginL = () => {
               border: 'none',
               padding: '1rem 2rem',
               borderRadius: '10px',
-              fontSize: '1rem',
+            
               fontFamily: 'DMB',
               cursor: 'pointer',
-              fontSize: '1.2rem',
+              fontSize: '1.2rem',width:'40%'
             }}
-            onClick={handleGoUserClick}
+            onClick={handleGo}
           >
             GO
           </button>
         </div>
-        <p style={{ marginTop: '2rem', textDecoration: 'underline', cursor: 'pointer', color: "#7f7f7f", fontFamily: "DMSB" }}>LOGIN</p>
+        {/* <p style={{ marginTop: '2rem', textDecoration: 'underline', cursor: 'pointer', color: "#7f7f7f", fontFamily: "DMSB" }}>LOGIN</p> */}
       </div>
 
       {isModalVisible && (

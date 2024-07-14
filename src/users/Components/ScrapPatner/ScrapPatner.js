@@ -12,7 +12,7 @@ const ScrapPatner = ({ imageUrl, partnerInfo }) => {
   };
   const { name, material ,weightPerKg} = partnerInfo;
   return (
-    <div className='parent ' style={{ marginTop:"3rem" ,border:'.05rem solid black'}}>
+    <div className='parent ' style={{ margin:"3rem 2rem" ,border:'.05rem solid black',backgroundColor:"transparent"}}>
       <div className='div-left'>
       <img
           onClick={handleImageClick}
@@ -30,17 +30,23 @@ const ScrapPatner = ({ imageUrl, partnerInfo }) => {
         />
       </div>
      
-      <div className='div-right'>
-     
-     <div>  <p style={{fontSize:'x-large' ,marginBottom:'4px'}}>{name}</p>
-     <div  style={{ textAlign: 'right', marginLeft: '3rem', paddingLeft: '2rem' }} className='patani'>{material} <span className="blank">₹{weightPerKg}/KG</span> </div>
-     </div>
-<<<<<<< HEAD
-     <div  style={{ alignSelf:'end',marginLeft:'3rem' , paddingLeft:'2rem',textAlign: 'end', }} className='patani ok'>I <span className="blank">₹7/KG</span> </div>
-=======
-     <div  style={{ alignSelf:'end',marginLeft:'3rem' , paddingLeft:'2rem',textAlign: 'end', }} className='patani ok'>{material} <span className="blank">₹{weightPerKg}/KG</span> </div>
->>>>>>> 67a012897886a9ea5b44632db414b39bc5cf7424
-    </div>
+      <div className='div-right' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+        <p style={{ fontSize: 'x-large', marginBottom: '4px',alignSelf:"flex-start" }}>{name}</p>
+        <div style={{ display: 'flex', flexDirection: 'row' ,marginTop:"1rem"}}>
+          <div style={{ textAlign: 'right', marginLeft: '3rem', padding: '0.4rem 0rem 0.4rem 1rem', display: 'flex', justifyContent: 'space-between', border: '1px solid black', borderRadius: '5px', alignItems: 'center' }}>
+            <span>{material}</span>
+            <span style={{ marginLeft: '10px', backgroundColor: '#65C047', padding: '0.4rem 1rem', borderRadius: '5px', color: 'white', fontFamily: 'DMSB', height: '100%', display: 'flex', alignItems: 'center' ,justifyContent:"flex-end"}}>
+              ₹{weightPerKg}/KG
+            </span>
+          </div>
+          <div style={{ textAlign: 'right', marginLeft: '3rem', padding: '0.4rem 0rem 0.4rem 1rem', display: 'flex', justifyContent: 'space-between', border: '1px solid black', borderRadius: '5px', alignItems: 'center' }}>
+            <span>{material}</span>
+            <span style={{ marginLeft: '10px', backgroundColor: '#65C047', padding: '0.4rem 1rem', borderRadius: '5px', color: 'white', fontFamily: 'DMSB', height: '100%', display: 'flex', alignItems: 'center' }}>
+              ₹{weightPerKg}/KG
+            </span>
+          </div>
+        </div>
+      </div>
      
      
      

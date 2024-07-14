@@ -1,14 +1,16 @@
 import React from 'react';
 import { FaArrowRight } from "react-icons/fa";
 
-function OrderCard() {
- 
+function OrderCard({ onViewBill,order }) {
+  const { OrderID, Scrapper, TotalBill, Items, Status, Name } = order;
   const handleBill = () => {
-        console.log("Bill btn pressed");
-      };
+    console.log('Bill btn pressed');
+    onViewBill(); // Call parent function to show PaymentCard
+  };
+
 
   const orders = [
-    { id: '#OD 49I29', date: '12 June 2024' },
+    { id: OrderID, date: Name },
 //     { id: '#OD 49I30', date: '13 June 2024' },
 //     { id: '#OD 49I31', date: '14 June 2024' },
 //     { id: '#OD 49I32', date: '15 June 2024' },
@@ -18,16 +20,17 @@ function OrderCard() {
 
   return (
     <div>
-      <h2 style={{ paddingLeft: "1.5rem" }}>My Orders</h2>
+      {/* <h2 style={{ paddingLeft: "1.5rem" }}>My Orders</h2> */}
       <div
         style={{
-          maxHeight: '400px',
+          // maxHeight: '400px',
           overflowY: 'auto',
-          padding: '1rem',
-          backgroundColor: '#fafafa',
-          margin: '1rem',
-        //   border: '.05rem solid black',
+          padding: '0.4rem 1rem',
+          // backgroundColor: '#fafafa',
+          // margin: '0rem rem',
+          // border: '.05rem solid black',
           borderRadius: 10,
+          width:"100%",
         }}
       >
         {orders.map((order, index) => (
@@ -38,17 +41,26 @@ function OrderCard() {
               flexDirection: "row",
               padding: "1rem",
               backgroundColor: "#fafafa",
-              margin: "0.5rem 0",
+              // margin: "",
               justifyContent: "space-around",
               alignItems: "center",
               border: ".05rem solid black",
-              borderRadius: 10,
+              borderRadius: 10,width:'90%'
             }}
           >
-            <div style={{ width: "5rem", height: "5rem", backgroundColor: "#d9ffe8",borderRadius:10 }}></div>
+            <div style={{ 
+  width: "5rem", 
+  height: "5rem", 
+  backgroundColor: "#d9ffe8", 
+  borderRadius: 10,
+  backgroundImage: "url('https://img.freepik.com/premium-vector/indian-man-face-avatar_710508-12.jpg')",
+  backgroundSize: "cover",  // Ensure the image covers the entire div
+  backgroundPosition: "center",  // Center the image within the div
+  backgroundRepeat: "no-repeat",  // Prevent repeating the image
+}}></div>
             <div style={{ display: "flex", flexDirection: "column", marginRight: "3rem" }}>
-              <span style={{ color: "#33333b",fontFamily:"DMSB" }}>{order.id}</span>
-              <span style={{ color: "#c5c5c5", marginTop: "0.7rem" }}>{order.date}</span>
+              <span style={{ color: "#33333b",fontFamily:"DMSB" }}># {order.id}</span>
+              <span style={{ color: "#c5c5c5", marginTop: "0.7rem" }}>Name:  {order.date}</span>
             </div>
             <button
               style={{

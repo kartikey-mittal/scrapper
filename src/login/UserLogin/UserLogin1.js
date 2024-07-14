@@ -5,8 +5,8 @@ import { db } from './../../firebase'; // Import Firestore instance
 import { doc, setDoc } from 'firebase/firestore'; // Import Firestore methods
 
 const UserLogin1 = ({ location }) => {
-
-  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [formattedAddress, setFormattedAddress] = useState("");
@@ -14,8 +14,9 @@ const UserLogin1 = ({ location }) => {
   const [houseNo, setHouseNo] = useState("");
   const { state } = useLocation();
   const { phoneNumber } = state;
+  const { name }=state;
 
-  console.log(phoneNumber);
+  console.log(name);
   
   
 
@@ -105,6 +106,13 @@ const UserLogin1 = ({ location }) => {
         Phone: phoneNumber,
       });
       alert("Address saved successfully!");
+      // Store name and phoneNumber in local storage
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userPhone", phoneNumber);
+      localStorage.setItem("userAddress", fullAddress);
+
+      // Navigate to /user/home
+      navigate('/user/home');
     } catch (error) {
       console.error("Error saving address:", error);
       alert(`Error saving address: ${error.message}`);
